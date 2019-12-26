@@ -2,10 +2,11 @@ import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {loadCountries, setDeliveryInfoStatus} from "../../actionCreators";
+import {countries} from '../../data';
 
 class DeliveryInfoStep extends React.Component {
     static propTypes = {
-        countries: PropTypes.array,
+        //countries: PropTypes.array,
         loadCountries: PropTypes.func,
         setDeliveryInfoStatus: PropTypes.func
     }
@@ -27,7 +28,7 @@ class DeliveryInfoStep extends React.Component {
     }
 
     componentDidMount() {
-        this.props.loadCountries();
+        //this.props.loadCountries();
     }
 
     render() {
@@ -59,7 +60,8 @@ class DeliveryInfoStep extends React.Component {
                             borderColor: !isValid && !countryValid ? '#f02e3e' : '#DEDCDC'
                         }} className="form__field item-2">
                             <option value="0">Страна</option>
-                            {this.props.countries.map((item) => <option value={item.id}>{item.name}</option>)}
+                            {/*{this.props.countries.map((item) => <option value={item.id}>{item.name}</option>)}*/}
+                            {Object.keys(countries).map(title => ({id: title, name: countries[title]})).map((item) => <option value={item.id}>{item.name}</option>)}
                         </select>
                         <input onChange={this.getPostcode} style={{borderColor: !isValid && !postcodeValid ? '#f02e3e' : '#DEDCDC'}} type="text"
                                placeholder="Индекс" className="form__field item-3"/>
@@ -121,4 +123,5 @@ class DeliveryInfoStep extends React.Component {
     };
 };
 
-export default connect(({countries}) => ({countries}), {loadCountries, setDeliveryInfoStatus})(DeliveryInfoStep);
+export default connect(null, {setDeliveryInfoStatus})(DeliveryInfoStep);
+//export default connect(({countries}) => ({countries}), {loadCountries, setDeliveryInfoStatus})(DeliveryInfoStep);
